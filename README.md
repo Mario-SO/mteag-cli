@@ -1,7 +1,6 @@
 # 🃏 mteag-cli 💻
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Mario-SO/mteag-cli)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Mario-SO/mteag-cli)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Mario-SO/mteag-cli)
 
 `mteag-cli` is a command-line interface (CLI) app that lets users interact with the Magic: The Gathering API.
