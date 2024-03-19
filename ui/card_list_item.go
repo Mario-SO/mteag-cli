@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/Mario-SO/mteag-cli/entity"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mario-so/mteag-cli/item"
 )
 
 type ItemDelegate struct{}
@@ -40,7 +40,7 @@ func (d ItemDelegate) Render(w io.Writer, m list.Model, index int, listItem list
 }
 
 type CardListItem struct {
-	Card entity.Card
+	Card item.Card
 }
 
 func (c CardListItem) FilterValue() string {

@@ -9,24 +9,21 @@ import (
 
 const baseURI string = "https://api.scryfall.com/cards/named?fuzzy="
 
-func GetCards(cardName string) ([]item.Card, error) {
+func GetCard(cardName string) (item.Card, error) {
 	url := baseURI + cardName
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, err
+		return item.Card{}, err
 	}
 
-	var body = resp.Body
 	defer resp.Body.Close()
 
-	var data struct {
-		Data []item.Card `json:"data"`
-	}
+	var card item.Card
 
-	err = json.NewDecoder(body).Decode(&data)
+	err = json.NewDecoder(resp.Body).Decode(&card)
 	if err != nil {
-		return nil, err
+		return item.Card{}, err
 	}
 
-	return data.Data, nil
+	return card, nil
 }
