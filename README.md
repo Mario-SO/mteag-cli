@@ -20,6 +20,12 @@ go run .
 
 -  Type the name of the card you're searching for, the API uses fuzzy matching so write whatever you remember about your card.
 
+You can also use the `mteag.sh` script by running:
+
+```shell
+./mteag.sh
+```
+
 ## Key Shortcuts
 
 -  `q` or `ctrl+C`: quits the application.
@@ -30,11 +36,6 @@ go run .
 
 -  Go version 1.15 or newer.
 -  Bubble Tea for building the robust terminal-based interface.
-
-## 🚧 Contributions
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. 
-
-For details, visit https://cla.opensource.microsoft.com.
 
 ## 💖 Support
 If you like this project, give it a ⭐️ on GitHub! 
