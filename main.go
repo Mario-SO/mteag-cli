@@ -1,40 +1,51 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
-	"net/http"
+
+	"github.com/charmbracelet/bubbles/list"
+	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/bubbles/table"
+	"github.com/charmbracelet/bubbles/textinput"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mario-so/mteag-cli/api"
+	"github.com/mario-so/mteag-cli/item"
 )
 
-const baseURI string = "https://api.scryfall.com/cards/named?fuzzy="
+type Mode int64
 
-type Card struct {
-	Name      string `json:"name"`
-	ManaCost  string `json:"mana_cost"`
-	ImageUris struct {
-		Large string `json:"large"`
-	} `json:"image_uris"`
-	Prices struct {
-		Eur string `json:"eur"`
-		Usd string `json:"usd"`
-	} `json:"prices"`
+const (
+	Search int64 = iota
+	Select
+	View
+)
+
+type model struct {
+	textInput    textinput.Model
+	cardList     list.Model
+	infoTable    table.Model
+	spinner      spinner.Model
+	selectedCard item.Card
+	mode         Mode
+	isLoading    bool
 }
 
-func GetCards(cardName string) (*Card, error) {
-	url := baseURI + cardName
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
+type getCardMsg struct {
+	cards []list.Item
+}
 
-	var card Card
-	err = json.NewDecoder(resp.Body).Decode(&card)
-	if err != nil {
-		return nil, err
+func getCardsCmd(cardName string) tea.Cmd {
+	return func() tea.Msg {
+		cards, err := api.GetCards(cardName)
+		if err != nil {
+			return nil
+		}
+		cardListItems := make([]list.Item, len(cards))
+		for i, card := range cards {
+			cardListItems[i] = &ui.CardListItem{Card: card}
+		}
+		return getCardsMsg{cards: cardListItems}
 	}
-
-	return &card, nil
 }
 
 func main() {
